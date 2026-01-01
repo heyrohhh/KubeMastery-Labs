@@ -1,6 +1,31 @@
 🚀 Employee Management System (Kubernetes Edition)
 Ek full-stack CRUD application jo React, Node.js, aur MySQL ka use karti hai, aur poori tarah se Kubernetes (K8s) par scaled aur deployed hai. Is project ko local machine par high-availability aur load balancing ke saath chalane ke liye design kiya gaya hai.
 
+# Employee Management System - Kubernetes Deployment
+
+This project demonstrates the orchestration of a full-stack application using Kubernetes. It includes a frontend, a backend, and a MySQL database, all managed within a dedicated namespace.
+
+## 🚀 Features Implemented
+- **Microservices Architecture:** Decoupled Frontend, Backend, and Database tiers.
+- **High Availability:** Configured 3 replicas for both Frontend and Backend to ensure zero downtime.
+- **Horizontal Pod Autoscaling (HPA):** Implemented autoscaling for the backend based on CPU utilization (Scales from 2 to 10 pods).
+- **Service Discovery:** Used `ClusterIP` for internal DB communication and `LoadBalancer` for external traffic.
+- **Resource Management:** Defined resource requests and limits to optimize cluster performance.
+
+## 🛠 Tech Stack
+- **Orchestration:** Kubernetes
+- **Containerization:** Docker
+- **Scaling:** HPA (Horizontal Pod Autoscaler)
+- **Local Environment:** Minikube / Docker Desktop
+
+## 📸 Deployment Screenshot
+![Kubectl Status](path-to-your-image.png)
+
+## 🏗 How to Run
+1. Clone the repo: `git clone https://github.com/heyrohhh/practisedkubernete.git`
+2. Apply manifests: `kubectl apply -f .`
+3. Check status: `kubectl get all -n employeemanagement`
+
 🏗️ Architecture Overview
 Frontend: React (Vite) - 3 Replicas.
 
