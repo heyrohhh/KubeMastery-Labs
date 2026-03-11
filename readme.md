@@ -1,54 +1,51 @@
-# KubeMastery-Labs ☸️
-### Comprehensive Kubernetes Hands-on Infrastructure Practice
+KubeMastery Labs ☸️
 
-This repository serves as a technical laboratory for mastering **Kubernetes (K8s) orchestration**. It contains practical implementations of container orchestration patterns, service discovery, and resource management strategies.
+Hands-on Kubernetes practice repository — workloads, networking, storage, scaling, and configuration management implemented from scratch.
 
-[![K8s Version](https://img.shields.io/badge/Kubernetes-v1.28%2B-blue?logo=kubernetes)](https://github.com/heyrohhh/practisedkubernete)
 
-## 🚀 Technical Core Concepts
-I have implemented the following cloud-native patterns within this project:
+What This Is
+A personal lab for building real familiarity with Kubernetes. Each directory targets a specific concept — not just reading docs, but writing manifests, applying them to a live cluster, and debugging until things actually work.
+Built and tested on Minikube and Docker Desktop.
 
-- **Workload Management:** Deploying scalable `Deployments` and individual `Pods` with health checks.
-- **Service Discovery:** Implementing `ClusterIP`, `NodePort`, and `LoadBalancer` services for internal and external traffic management.
-- **Configuration Management:** Using `ConfigMaps` and `Secrets` to decouple configuration from container images.
-- **Storage & Persistence:** Managing data lifecycle using `PersistentVolumes (PV)` and `PersistentVolumeClaims (PVC)`.
-- **Scaling & Self-Healing:** Configuring Horizontal Pod Autoscalers (HPA) and resource limits (CPU/Memory).
+Concepts Covered
+AreaWhat's ImplementedWorkloadsDeployments, Pods, ReplicaSets with liveness/readiness health checksNetworkingClusterIP, NodePort, LoadBalancer services — internal and external traffic routingIngressIngress controller setup with separate routing rules for frontend and backendConfigurationConfigMaps and Secrets to decouple config from container imagesStoragePersistentVolumes (PV) and PersistentVolumeClaims (PVC) for stateful workloadsAutoscalingHorizontal Pod Autoscaler (HPA) based on CPU utilization with resource limitsInit ContainersDatabase initialization via init containers before main app starts
 
-## 📁 Repository Structure
-```plaintext
+Repository Structure
 .
-├── deployments/       # YAML manifests for application workloads
-├── services/          # Networking and Load Balancing configurations
-├── config-maps/       # Environment-specific configuration files
+├── deployments/       # Application workload manifests (Deployments, Pods)
+├── services/          # Networking configs — ClusterIP, NodePort, LoadBalancer, Ingress
+├── config-maps/       # ConfigMaps and Secrets for environment config
+├── storage/           # PV and PVC manifests for persistent storage
+├── scaling/           # HPA configs and resource limit definitions
 ├── scripts/           # Helper scripts for minikube/kubectl setup
-└── README.md          # Technical documentation
-🛠️ Prerequisites & Setup
-To run these manifests locally, ensure you have a cluster running (Minikube/Docker Desktop/K3s).
+└── README.md
 
-Clone the Labs:
+Getting Started
+Prerequisites: A running local cluster — Minikube, Docker Desktop, or K3s.
+bash# Clone the repo
+git clone https://github.com/heyrohhh/KubeMastery-Labs.git
+cd KubeMastery-Labs
 
-Bash
-
-git clone [https://github.com/heyrohhh/practisedkubernete.git](https://github.com/heyrohhh/practisedkubernete.git)
-cd practisedkubernete
-Apply Manifests:
-
-Bash
-
+# Apply workloads
 kubectl apply -f deployments/
 kubectl apply -f services/
-Verify Status:
 
-Bash
-
+# Verify everything is running
 kubectl get all
-💡 Why this Repo? (DevOps Perspective)
-As an aspiring DevOps Engineer, I built this to demonstrate proficiency in:
+For HPA to work, ensure the metrics-server is enabled:
+bash# Minikube
+minikube addons enable metrics-server
 
-YAML manifest writing and validation.
+Key Learnings
+Networking — Understanding the difference between ClusterIP (internal only), NodePort (external via node IP), and LoadBalancer (cloud-provisioned) took real debugging to internalize. Ingress on top of that adds another layer of routing logic worth understanding separately.
+Stateful vs Stateless — Stateless Deployments are straightforward. Stateful workloads need PV/PVC correctly bound, and init containers for setup ordering. Getting the init container sequence right was a useful exercise.
+HPA behaviour — HPA doesn't scale instantly. There's a stabilisation window. Testing this properly meant generating actual CPU load and watching kubectl get hpa update in real time.
+Secrets management — Kubernetes Secrets are base64 encoded, not encrypted. In production they'd be backed by something like AWS Secrets Manager or Vault. This repo uses them for local practice only.
 
-Understanding of K8s Networking and inter-pod communication.
+Related Projects
+If you want to see these concepts applied at scale in a cloud environment:
+→ microservices_demo — 18-service microservices platform migrated from GCP Kubernetes to AWS ECS Fargate, with Terraform infrastructure, GitHub Actions CI/CD, and Prometheus/Grafana monitoring.
 
-Managing Stateful vs Stateless applications in a cluster.
-
-Maintained by: [Your Name]
+Author
+Rohit Neel Mishra — LinkedIn
+Aspiring DevOps / Cloud / SRE Engineer
